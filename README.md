@@ -1,3 +1,5 @@
+# Codepath project requirements grading readMe.MD is inside of the src folder 
+
 # 🌤️ Weather Check - Weather Forecast Application
 
 A beautiful, modern weather forecast application built with React and Vite. Get real-time weather data, 5-day forecasts, and interactive charts for any city in the world!
