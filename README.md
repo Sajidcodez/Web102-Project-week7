@@ -1,4 +1,4 @@
-# Codepath project requirements grading readMe.MD is inside of the src folder 
+# Codepath project requirements grading ReadMe.MD is inside of the src folder 
 
 # 🌤️ Weather Check - Weather Forecast Application
 
