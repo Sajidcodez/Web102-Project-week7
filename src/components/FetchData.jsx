@@ -1,5 +1,6 @@
 import react, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Card from './Card';
 import icons from './Icons';
 import LineChart from './LineChart';
@@ -81,13 +82,17 @@ const FetchData = ({ search, list, setList, city, setCity }) => {
                                 <p>Description</p>
                             </div>
                             {list.map((forecast, index) => (
-                                <div key={index} className='grid grid-cols-5'> 
+                                <Link 
+                                    to={`/detail/${forecast.dt}`}
+                                    key={index} 
+                                    className='grid grid-cols-5 hover:bg-violet-500/30 p-2 rounded-lg transition cursor-pointer'
+                                > 
                                     <p>{new Date(forecast.dt_txt).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })}</p>
                                     <p>{forecast.dt_txt.split(" ")[1]}</p>
                                     <p>{convertTemp(forecast.main.temp)}{tempUnit}</p>
                                     <p>{icons[forecast.weather[0].main]}</p>
                                     <p>{forecast.weather[0].description}</p>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                         <div>

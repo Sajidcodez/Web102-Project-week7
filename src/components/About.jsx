@@ -1,8 +1,10 @@
 import icons from './Icons';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const About = ({ city, list }) => {
     const [isCelsius, setIsCelsius] = useState(true);
+    const navigate = useNavigate();
 
     const convertTemp = (celsius) => {
         if (isCelsius) {
@@ -22,7 +24,13 @@ const About = ({ city, list }) => {
             {
                 (city !== null && list !== null) && (
                     <div className='flex flex-col gap-4'>
-                        <div className='flex justify-center'>
+                        <div className='flex justify-center gap-4'>
+                            <button 
+                                onClick={() => navigate('/')}
+                                className='bg-violet-600 hover:bg-violet-700 text-white font-bold px-4 py-2 rounded-lg transition'
+                            >
+                                ← Back to Dashboard
+                            </button>
                             <button 
                                 onClick={() => setIsCelsius(!isCelsius)}
                                 className='bg-violet-600 hover:bg-violet-700 text-white font-mono px-4 py-2 rounded-lg transition'

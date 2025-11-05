@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import About from './components/About';
 import FetchData from './components/FetchData';
 import Header from './components/Header';
+import DetailView from './components/DetailView';
 
 function App() {
   const [search, setSearch] = useState("");
@@ -43,6 +44,7 @@ function App() {
             <Route path='/' element={<FetchData search={search} setSearch={setSearch} list={list} setList={setList} city={city} setCity={setCity} />} />
             <Route path='/search' element={<FetchData search={search} setSearch={setSearch} list={list} city={city} setList={setList} setCity={setCity} />} />
             <Route path='/about' element={<About city={city} list={list} />} />
+            <Route path='/detail/:timestamp' element={<DetailView list={list} />} />
           </Routes>
         </div>
       </BrowserRouter>
