@@ -2,6 +2,8 @@
 
 A beautiful, modern weather forecast application built with React and Vite. Get real-time weather data, 5-day forecasts, and interactive charts for any city in the world!
 
+🔗 --> [View Live Website](https://wats-the-weather.netlify.app/) 
+
 ## ✨ Features
 
 ### 📍 Location Search
