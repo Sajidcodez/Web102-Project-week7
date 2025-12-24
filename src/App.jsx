@@ -9,6 +9,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [list, setList] = useState(null);
   const [city, setCity] = useState(null);
+  const [currentWeather, setCurrentWeather] = useState(null);
   const [showWelcome, setShowWelcome] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   
@@ -44,9 +45,9 @@ function App() {
           <Header search={search} setSearch={setSearch} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <div className='flex-1 w-full'>
             <Routes >
-              <Route path='/' element={<FetchData search={search} setSearch={setSearch} list={list} setList={setList} city={city} setCity={setCity} />} />
-              <Route path='/search' element={<FetchData search={search} setSearch={setSearch} list={list} city={city} setList={setList} setCity={setCity} />} />
-              <Route path='/about' element={<About city={city} list={list} />} />
+              <Route path='/' element={<FetchData search={search} setSearch={setSearch} list={list} setList={setList} city={city} setCity={setCity} currentWeather={currentWeather} setCurrentWeather={setCurrentWeather} />} />
+              <Route path='/search' element={<FetchData search={search} setSearch={setSearch} list={list} city={city} setList={setList} setCity={setCity} currentWeather={currentWeather} setCurrentWeather={setCurrentWeather} />} />
+              <Route path='/about' element={<About city={city} list={list} currentWeather={currentWeather} />} />
               <Route path='/detail/:timestamp' element={<DetailView list={list} />} />
             </Routes>
           </div>

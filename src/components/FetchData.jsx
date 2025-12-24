@@ -6,10 +6,10 @@ import icons from './Icons';
 import LineChart from './LineChart';
 import BarChart from './BarChart';
 
-const FetchData = ({ search, list, setList, city, setCity }) => {
+const FetchData = ({ search, list, setList, city, setCity, currentWeather, setCurrentWeather }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [isCelsius, setIsCelsius] = useState(true);
+    const [isCelsius, setIsCelsius] = useState(false);
 
     const API_KEY = import.meta.env.VITE_APP_API_KEY;
 
@@ -28,14 +28,21 @@ const FetchData = ({ search, list, setList, city, setCity }) => {
             try {
                 setLoading(true);
                 setError(null);
-                const URL = `https://api.openweathermap.org/data/2.5/forecast?q=${search}&appid=${API_KEY}&units=metric`;
-                const response = await axios.get(URL);
-                console.log(response);
-                if (Array.isArray(response.data.list)) {
-                    setList(response.data.list);
+                
+                // Fetch current weather
+                const currentURL = `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=${API_KEY}&units=metric`;
+                const currentResponse = await axios.get(currentURL);
+                setCurrentWeather(currentResponse.data);
+                
+                // Fetch 5-day forecast
+                const forecastURL = `https://api.openweathermap.org/data/2.5/forecast?q=${search}&appid=${API_KEY}&units=metric`;
+                const forecastResponse = await axios.get(forecastURL);
+                console.log(forecastResponse);
+                if (Array.isArray(forecastResponse.data.list)) {
+                    setList(forecastResponse.data.list);
                 } 
-                if (response.data.city) {
-                    setCity(response.data.city);
+                if (forecastResponse.data.city) {
+                    setCity(forecastResponse.data.city);
                 }
             } catch (error) {
                 setError('Error fetching data. Please try again later.');
@@ -56,7 +63,7 @@ const FetchData = ({ search, list, setList, city, setCity }) => {
         <div className='w-full min-h-screen text-gray-100 overflow-x-hidden flex-1'>
             {loading && <p className='p-6'>Loading...</p>}
             {error && <p className='p-6 text-red-400'>{error}</p>}
-            {list && (
+            {list && currentWeather && (
                 <div className='w-full flex flex-col p-4 md:p-6'>
                     <div className='flex justify-end mb-4'>
                         <button 
@@ -68,9 +75,9 @@ const FetchData = ({ search, list, setList, city, setCity }) => {
                     </div>
                     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 p-2 md:p-4'>
                         <Card data={city.name} title={`${city.name} ${city.country}`} />
-                        <Card data={`${convertTemp(list[0].main.temp)}${tempUnit}`} title="Current Temp" />
-                        <Card data={icons[list[0].weather[0].main]} title="Weather"  />
-                        <Card data={list[0].weather[0].description} title="Description" />
+                        <Card data={`${convertTemp(currentWeather.main.temp)}${tempUnit}`} title="Current Temp" />
+                        <Card data={icons[currentWeather.weather[0].main]} title="Weather"  />
+                        <Card data={currentWeather.weather[0].description} title="Description" />
                     </div>
                     <div className='flex flex-col lg:flex-row gap-6 lg:gap-10 w-full'>
                         <div className='flex flex-col text-center gap-3 bg-violet-100/20 p-4 md:p-6 lg:p-10 mb-20 rounded-xl overflow-x-auto flex-1 min-w-0'>
