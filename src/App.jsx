@@ -10,12 +10,14 @@ function App() {
   const [list, setList] = useState(null);
   const [city, setCity] = useState(null);
   const [showWelcome, setShowWelcome] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   
   return (
-    <div className='min-h-screen w-screen bg-[url("/src/assets/sky.jpg")] bg-cover'>
+    <div className='min-h-screen w-full overflow-x-hidden'>
+      <div className='fixed inset-0 bg-[url("/src/assets/sky.jpg")] bg-cover -z-10'></div>
       {showWelcome && (
         <div className='fixed inset-0 bg-black/50 flex items-center justify-center z-50'>
-          <div className='bg-violet-900/90 rounded-lg p-8 max-w-md text-center text-white shadow-2xl'>
+          <div className='bg-violet-900/90 rounded-lg p-8 max-w-md text-center text-white shadow-2xl mx-4'>
             <h1 className='text-4xl mb-4'>🌤️ Weather Check</h1>
             <p className='text-lg mb-6 text-gray-200'>Welcome to your personal weather forecast app!</p>
             <div className='text-left bg-violet-800/50 rounded-lg p-4 mb-6 text-sm leading-6'>
@@ -38,14 +40,16 @@ function App() {
         </div>
       )}
       <BrowserRouter>
-        <div className='flex flex-row justify-start'>
-          <Header search={search} setSearch={setSearch} />
-          <Routes >
-            <Route path='/' element={<FetchData search={search} setSearch={setSearch} list={list} setList={setList} city={city} setCity={setCity} />} />
-            <Route path='/search' element={<FetchData search={search} setSearch={setSearch} list={list} city={city} setList={setList} setCity={setCity} />} />
-            <Route path='/about' element={<About city={city} list={list} />} />
-            <Route path='/detail/:timestamp' element={<DetailView list={list} />} />
-          </Routes>
+        <div className='flex flex-col md:flex-row w-full min-h-screen'>
+          <Header search={search} setSearch={setSearch} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <div className='flex-1 w-full'>
+            <Routes >
+              <Route path='/' element={<FetchData search={search} setSearch={setSearch} list={list} setList={setList} city={city} setCity={setCity} />} />
+              <Route path='/search' element={<FetchData search={search} setSearch={setSearch} list={list} city={city} setList={setList} setCity={setCity} />} />
+              <Route path='/about' element={<About city={city} list={list} />} />
+              <Route path='/detail/:timestamp' element={<DetailView list={list} />} />
+            </Routes>
+          </div>
         </div>
       </BrowserRouter>
     </div>

@@ -53,28 +53,28 @@ const FetchData = ({ search, list, setList, city, setCity }) => {
     }, [search, API_KEY]);
 
     return (
-        <div className='flex min-h-screen w-screen text-gray-100 overflow-hidden'>
-            {loading && <p>Loading...</p>}
-            {error && <p>{error}</p>}
+        <div className='w-full min-h-screen text-gray-100 overflow-x-hidden flex-1'>
+            {loading && <p className='p-6'>Loading...</p>}
+            {error && <p className='p-6 text-red-400'>{error}</p>}
             {list && (
-                <div className='w-screen flex flex-col p-6'>
+                <div className='w-full flex flex-col p-4 md:p-6'>
                     <div className='flex justify-end mb-4'>
                         <button 
                             onClick={() => setIsCelsius(!isCelsius)}
-                            className='bg-violet-600 hover:bg-violet-700 text-white font-mono px-4 py-2 rounded-lg transition'
+                            className='bg-violet-600 hover:bg-violet-700 text-white font-mono px-4 py-2 rounded-lg transition text-sm md:text-base'
                         >
                             {isCelsius ? 'Switch to °F' : 'Switch to °C'}
                         </button>
                     </div>
-                    <div className='grid grid-col-1 md:grid-cols-4 gap-6 p-4'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 p-2 md:p-4'>
                         <Card data={city.name} title={`${city.name} ${city.country}`} />
                         <Card data={`${convertTemp(list[0].main.temp)}${tempUnit}`} title="Current Temp" />
                         <Card data={icons[list[0].weather[0].main]} title="Weather"  />
                         <Card data={list[0].weather[0].description} title="Description" />
                     </div>
-                    <div className='flex flex-row gap-10'>
-                        <div className='flex flex-col text-center gap-3 bg-violet-100/20 p-6 md:p-10 mb-20 rounded-xl'>
-                            <div className='grid grid-cols-5 pb-2 font-mono text-xl'>
+                    <div className='flex flex-col lg:flex-row gap-6 lg:gap-10 w-full'>
+                        <div className='flex flex-col text-center gap-3 bg-violet-100/20 p-4 md:p-6 lg:p-10 mb-20 rounded-xl overflow-x-auto flex-1 min-w-0'>
+                            <div className='grid grid-cols-5 gap-2 pb-2 font-mono text-xs sm:text-sm md:text-base whitespace-nowrap md:whitespace-normal'>
                                 <p>Date</p>
                                 <p>Time</p>
                                 <p>Temp</p>
@@ -85,17 +85,17 @@ const FetchData = ({ search, list, setList, city, setCity }) => {
                                 <Link 
                                     to={`/detail/${forecast.dt}`}
                                     key={index} 
-                                    className='grid grid-cols-5 hover:bg-violet-500/30 p-2 rounded-lg transition cursor-pointer'
+                                    className='grid grid-cols-5 gap-2 hover:bg-violet-500/30 p-2 rounded-lg transition cursor-pointer text-xs sm:text-sm md:text-base whitespace-nowrap md:whitespace-normal'
                                 > 
                                     <p>{new Date(forecast.dt_txt).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })}</p>
                                     <p>{forecast.dt_txt.split(" ")[1]}</p>
                                     <p>{convertTemp(forecast.main.temp)}{tempUnit}</p>
                                     <p>{icons[forecast.weather[0].main]}</p>
-                                    <p>{forecast.weather[0].description}</p>
+                                    <p className='truncate'>{forecast.weather[0].description}</p>
                                 </Link>
                             ))}
                         </div>
-                        <div>
+                        <div className='flex flex-col gap-6 w-full lg:w-1/2'>
                             <LineChart list={list} isCelsius={isCelsius} />
                             <BarChart list={list} isCelsius={isCelsius} />
                         </div>

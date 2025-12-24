@@ -62,6 +62,9 @@ const BarChart = ({ list, isCelsius }) => {
             legend: {
                 labels: {
                     color: 'rgb(209, 213, 219)',
+                    font: {
+                        size: window.innerWidth < 768 ? 10 : 12,
+                    },
                 },
             },
         },
@@ -69,6 +72,9 @@ const BarChart = ({ list, isCelsius }) => {
             y: {
                 ticks: {
                     color: 'rgb(209, 213, 219)',
+                    font: {
+                        size: window.innerWidth < 768 ? 9 : 11,
+                    },
                 },
                 grid: {
                     color: 'rgba(209, 213, 219, 0.1)',
@@ -77,10 +83,10 @@ const BarChart = ({ list, isCelsius }) => {
             x: {
                 ticks: {
                     color: 'rgb(209, 213, 219)',
-                    maxRotation: 45,
-                    minRotation: 45,
+                    maxRotation: window.innerWidth < 768 ? 90 : 45,
+                    minRotation: window.innerWidth < 768 ? 90 : 45,
                     font: {
-                        size: 11,
+                        size: window.innerWidth < 768 ? 8 : 11,
                     },
                 },
                 grid: {
@@ -91,9 +97,9 @@ const BarChart = ({ list, isCelsius }) => {
     };
 
     return (
-        <div className='bg-violet-100/20 p-6 md:p-10 mb-20 rounded-xl'>
-            <h2 className='text-white mb-4'>Temperature Comparison</h2>
-            <div>
+        <div className='bg-violet-100/20 p-4 md:p-6 lg:p-10 mb-20 rounded-xl w-full'>
+            <h2 className='text-white mb-4 text-lg md:text-xl'>Temperature Comparison</h2>
+            <div className='w-full overflow-x-auto'>
                 {chartData ? <Bar data={chartData} options={options} /> : <p>Loading chart...</p>}
             </div>
         </div>
